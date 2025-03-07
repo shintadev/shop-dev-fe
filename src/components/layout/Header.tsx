@@ -85,39 +85,39 @@ const Header = () => {
 
   const categories = [
     {
-      name: 'Electronics',
+      name: 'Điện tử',
       slug: 'electronics',
-      subcategories: ['Smartphones', 'Laptops', 'Audio', 'Accessories'],
+      subcategories: ['Điện thoại', 'Laptop', 'Âm thanh', 'Phụ kiện'],
     },
     {
-      name: 'Clothing',
+      name: 'Quần áo',
       slug: 'clothing',
-      subcategories: ["Men's", "Women's", 'Kids', 'Activewear'],
+      subcategories: ['Nam', 'Nữ', 'Trẻ em', 'Đồ thể thao'],
     },
     {
-      name: 'Home & Kitchen',
+      name: 'Nhà cửa & Bếp',
       slug: 'home',
-      subcategories: ['Furniture', 'Decor', 'Appliances', 'Kitchen'],
+      subcategories: ['Nội thất', 'Trang trí', 'Thiết bị gia dụng', 'Nhà bếp'],
     },
     {
-      name: 'Books',
+      name: 'Sách',
       slug: 'books',
-      subcategories: ['Fiction', 'Non-Fiction', "Children's", 'Academic'],
+      subcategories: ['Tiểu thuyết', 'Phi hư cấu', 'Sách thiếu nhi', 'Học thuật'],
     },
     {
-      name: 'Sports',
+      name: 'Thể thao',
       slug: 'sports',
-      subcategories: ['Equipment', 'Clothing', 'Footwear', 'Accessories'],
+      subcategories: ['Thiết bị', 'Quần áo', 'Giày dép', 'Phụ kiện'],
     },
     {
-      name: 'Beauty',
+      name: 'Làm đẹp',
       slug: 'beauty',
-      subcategories: ['Skincare', 'Makeup', 'Haircare', 'Fragrance'],
+      subcategories: ['Chăm sóc da', 'Trang điểm', 'Chăm sóc tóc', 'Nước hoa'],
     },
     {
-      name: 'Toys & Games',
+      name: 'Đồ chơi & Trò chơi',
       slug: 'toys',
-      subcategories: ['Toys', 'Games', 'Puzzles', 'Outdoor Play'],
+      subcategories: ['Đồ chơi', 'Trò chơi', 'Câu đố', 'Chơi ngoài trời'],
     },
   ];
 
@@ -144,7 +144,7 @@ const Header = () => {
                   : 'text-gray-800 hover:text-primary'
               }`}
             >
-              All Products
+              Sản phẩm
               {pathname === '/products' && (
                 <span className='absolute bottom-0 left-0 w-full h-0.5 bg-primary'></span>
               )}
@@ -159,7 +159,7 @@ const Header = () => {
                 className='flex items-center gap-1 py-2 text-gray-800 hover:text-primary transition-colors'
                 onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
               >
-                Categories{' '}
+                Danh mục{' '}
                 <ChevronDown className='h-4 w-4 transition-transform duration-200 group-hover:rotate-180' />
               </button>
 
@@ -205,7 +205,7 @@ const Header = () => {
                   : 'text-gray-800 hover:text-primary'
               }`}
             >
-              New Arrivals
+              Hàng mới về
               {pathname === '/new-arrivals' && (
                 <span className='absolute bottom-0 left-0 w-full h-0.5 bg-primary'></span>
               )}
@@ -217,7 +217,7 @@ const Header = () => {
                 pathname === '/sale' ? 'text-primary font-medium' : 'hover:text-primary'
               }`}
             >
-              <span className='text-red-500'>Sale</span>
+              <span className='text-red-500'>Khuyến mãi</span>
               {pathname === '/sale' && (
                 <span className='absolute bottom-0 left-0 w-full h-0.5 bg-red-500'></span>
               )}
@@ -232,7 +232,7 @@ const Header = () => {
             <div className='relative w-full'>
               <Input
                 type='text'
-                placeholder='Search products...'
+                placeholder='Tìm kiếm sản phẩm...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className='pr-10 w-full rounded-full border-gray-200 focus:border-primary focus:ring-primary pl-5'
@@ -293,7 +293,7 @@ const Header = () => {
                     <DropdownMenuItem className='rounded-md p-2.5 focus:bg-primary/10 cursor-pointer'>
                       <Link href='/profile' className='w-full flex items-center gap-2'>
                         <User className='h-4 w-4' />
-                        <span>My Profile</span>
+                        <span>Hồ sơ của tôi</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className='rounded-md p-2.5 focus:bg-primary/10 cursor-pointer'>
@@ -316,7 +316,7 @@ const Header = () => {
                           <path d='M8 14h8' />
                           <path d='M8 6h8' />
                         </svg>
-                        <span>My Orders</span>
+                        <span>Đơn hàng của tôi</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem className='rounded-md p-2.5 focus:bg-primary/10 cursor-pointer'>
@@ -336,7 +336,7 @@ const Header = () => {
                           <path d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z' />
                           <circle cx='12' cy='10' r='3' />
                         </svg>
-                        <span>My Addresses</span>
+                        <span>Địa chỉ của tôi</span>
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -358,7 +358,7 @@ const Header = () => {
                           <polyline points='16 17 21 12 16 7' />
                           <line x1='21' y1='12' x2='9' y2='12' />
                         </svg>
-                        <span>Sign Out</span>
+                        <span>Đăng xuất</span>
                       </Link>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -371,12 +371,12 @@ const Header = () => {
                     variant='ghost'
                     className='rounded-full px-5 font-medium text-gray-800 hover:bg-primary/10 hover:text-primary'
                   >
-                    Sign In
+                    Đăng nhập
                   </Button>
                 </Link>
                 <Link href='/register'>
                   <Button className='rounded-full px-5 font-medium bg-primary hover:bg-primary/90'>
-                    Sign Up
+                    Đăng ký
                   </Button>
                 </Link>
               </>
@@ -412,7 +412,7 @@ const Header = () => {
             <div className='relative w-full'>
               <Input
                 type='text'
-                placeholder='Search products...'
+                placeholder='Tìm kiếm sản phẩm...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className='pr-10 w-full rounded-full border-gray-200 pl-4'
@@ -452,7 +452,7 @@ const Header = () => {
                     <path d='m20.2 7.8-7.7 7.7-4-4-5.7 5.7' />
                     <path d='M15 7h6v6' />
                   </svg>
-                  <span className='font-medium'>All Products</span>
+                  <span className='font-medium'>Tất cả sản phẩm</span>
                 </Link>
               </li>
               <li>
@@ -476,7 +476,7 @@ const Header = () => {
                         <path d='M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z' />
                         <line x1='18' x2='18' y1='9' y2='15' />
                       </svg>
-                      <span className='font-medium'>Categories</span>
+                      <span className='font-medium'>Danh mục</span>
                     </div>
                     <ChevronDown
                       className={`h-5 w-5 transition-transform duration-200 ${
@@ -523,7 +523,7 @@ const Header = () => {
                     <path d='M12 18v-6' />
                     <path d='M9 15h6' />
                   </svg>
-                  <span className='font-medium'>New Arrivals</span>
+                  <span className='font-medium'>Hàng mới về</span>
                 </Link>
               </li>
               <li>
@@ -550,7 +550,7 @@ const Header = () => {
                     <path d='m16.5 14.5 2.5 2.5' />
                     <path d='m19 14.5-2.5 2.5' />
                   </svg>
-                  <span className='font-medium text-red-500'>Sale</span>
+                  <span className='font-medium text-red-500'>Khuyến mãi</span>
                 </Link>
               </li>
 
@@ -571,7 +571,7 @@ const Header = () => {
                       className='flex items-center gap-2 px-2 py-3 rounded-lg hover:bg-gray-100'
                     >
                       <User className='h-5 w-5' />
-                      <span className='font-medium'>My Profile</span>
+                      <span className='font-medium'>Hồ sơ của tôi</span>
                     </Link>
                   </li>
                   <li>
@@ -596,7 +596,7 @@ const Header = () => {
                         <path d='M8 14h8' />
                         <path d='M8 6h8' />
                       </svg>
-                      <span className='font-medium'>My Orders</span>
+                      <span className='font-medium'>Đơn hàng của tôi</span>
                     </Link>
                   </li>
                   <li>
@@ -619,7 +619,7 @@ const Header = () => {
                         <polyline points='16 17 21 12 16 7' />
                         <line x1='21' y1='12' x2='9' y2='12' />
                       </svg>
-                      <span className='font-medium'>Sign Out</span>
+                      <span className='font-medium'>Đăng xuất</span>
                     </Link>
                   </li>
                 </>
@@ -643,7 +643,7 @@ const Header = () => {
                           <polyline points='10 17 15 12 10 7' />
                           <line x1='15' y1='12' x2='3' y2='12' />
                         </svg>
-                        <span className='font-medium'>Sign In</span>
+                        <span className='font-medium'>Đăng nhập</span>
                       </div>
                     </Link>
                   </li>
@@ -666,7 +666,7 @@ const Header = () => {
                           <line x1='19' y1='8' x2='19' y2='14' />
                           <line x1='22' y1='11' x2='16' y2='11' />
                         </svg>
-                        <span className='font-medium'>Sign Up</span>
+                        <span className='font-medium'>Đăng ký</span>
                       </div>
                     </Link>
                   </li>

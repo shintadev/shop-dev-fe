@@ -10,31 +10,31 @@ const Footer = () => {
         <div className='flex flex-wrap gap-8 justify-between'>
           {/* Quick Links section */}
           <div>
-            <h2 className='text-lg font-bold mb-4 text-blue-600'>Quick Links</h2>
+            <h2 className='text-lg font-bold mb-4 text-blue-600'>Liên kết nhanh</h2>
             <ul className='list-disc pl-5 space-y-2'>
               <li>
                 <Link href='/home' className='text-blue-500 hover:underline'>
-                  Home
+                  Trang chủ
                 </Link>
               </li>
               <li>
                 <Link href='/products' className='text-blue-500 hover:underline'>
-                  Shop
+                  Cửa hàng
                 </Link>
               </li>
               <li>
                 <Link href='/categories' className='text-blue-500 hover:underline'>
-                  Categories
+                  Danh mục
                 </Link>
               </li>
               <li>
                 <Link href='/about' className='text-blue-500 hover:underline'>
-                  About Us
+                  Về chúng tôi
                 </Link>
               </li>
               <li>
                 <Link href='/contact' className='text-blue-500 hover:underline'>
-                  Contact
+                  Liên hệ
                 </Link>
               </li>
             </ul>
@@ -42,31 +42,31 @@ const Footer = () => {
 
           {/* Customer Service section */}
           <div>
-            <h2 className='text-lg font-bold mb-4 text-blue-600'>Customer Service</h2>
+            <h2 className='text-lg font-bold mb-4 text-blue-600'>Dịch vụ khách hàng</h2>
             <ul className='space-y-3'>
               <li className='mb-1'>
                 <Link href='/faq' className='text-blue-500 hover:underline'>
-                  FAQ
+                  Câu hỏi thường gặp
                 </Link>
               </li>
               <li className='mb-1'>
                 <Link href='/shipping' className='text-blue-500 hover:underline'>
-                  Shipping Policy
+                  Chính sách vận chuyển
                 </Link>
               </li>
               <li className='mb-1'>
                 <Link href='/returns' className='text-blue-500 hover:underline'>
-                  Returns & Refunds
+                  Đổi trả & Hoàn tiền
                 </Link>
               </li>
               <li className='mb-1'>
                 <Link href='/privacy' className='text-blue-500 hover:underline'>
-                  Privacy Policy
+                  Chính sách bảo mật
                 </Link>
               </li>
               <li>
                 <Link href='/terms' className='text-blue-500 hover:underline'>
-                  Terms & Conditions
+                  Điều khoản & Điều kiện
                 </Link>
               </li>
             </ul>
@@ -74,7 +74,7 @@ const Footer = () => {
 
           {/* Contact Us section */}
           <div>
-            <h2 className='text-lg font-bold mb-4 text-blue-600'>Contact Us</h2>
+            <h2 className='text-lg font-bold mb-4 text-blue-600'>Liên hệ với chúng tôi</h2>
             <ul className='space-y-2'>
               <li className='flex items-center'>
                 <MapPinIcon className='w-4 h-4 mr-2 flex-shrink-0' /> 123 Shop Street, Ecommerce

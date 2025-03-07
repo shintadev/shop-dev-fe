@@ -1,6 +1,6 @@
 {
   "name": "shop-dev-fe",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -46,6 +46,7 @@
     "typescript": "^5"
   }
 }
+
 
 
 

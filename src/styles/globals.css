@@ -64,6 +64,38 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 230 90% 60%;
   }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  a {
+    @apply text-foreground;
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Loại bỏ hiệu ứng con trỏ văn bản trên các phần tử không phải input */
+  button, a, div, span, li, ul, nav, section, header, footer, aside, h1, h2, h3, h4, h5, h6 {
+    caret-color: transparent;
+    user-select: none;
+  }
+  
+  /* Cho phép người dùng sao chép văn bản nhưng vẫn không hiện cursor */
+  p, .product-description, .allow-select {
+    caret-color: transparent;
+    user-select: text;
+  }
+  
+  /* Khôi phục con trỏ văn bản cho các input, textarea, editable div, v.v. */
+  input, textarea, [contenteditable="true"] {
+    caret-color: auto;
+    user-select: auto;
+  }
 }
 
 @layer base {

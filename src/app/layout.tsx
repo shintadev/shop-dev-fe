@@ -9,9 +9,9 @@ import '@/styles/globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ShopDev - Your Ultimate E-Commerce Destination',
+  title: 'ShopDev - Điểm đến Thương mại điện tử Tuyệt vời của Bạn',
   description:
-    'ShopDev offers a wide range of products with fast shipping and great customer service',
+    'ShopDev cung cấp nhiều loại sản phẩm với giao hàng nhanh và dịch vụ khách hàng tuyệt vời',
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='vi'>
       <body className={inter.className}>
         <Providers>
           <div className='flex flex-col min-h-screen bg-gray-50'>
