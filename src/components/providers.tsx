@@ -10,7 +10,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000, // 1 minute
+      staleTime: 5 * 60 * 1000, // 5 minutes before data becomes stale
+      gcTime: 10 * 60 * 1000, // 10 minutes before unused data is garbage collected (formerly cacheTime)
+      refetchOnWindowFocus: false, // Don't refetch when window gets focus
+      refetchOnMount: false, // Don't refetch on component mount
+      refetchOnReconnect: true, // Refetch on network reconnection
+      retry: 1, // Only retry failed queries once
     },
   },
 });
@@ -18,7 +23,9 @@ const queryClient = new QueryClient({
 export default function Providers({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+      <SessionProvider
+        refetchInterval={5 * 60} // Refresh every 5 minutes instead of default
+      >
         {children}
         <Toaster position='top-right' richColors />
       </SessionProvider>

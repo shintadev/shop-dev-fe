@@ -33,12 +33,23 @@ const Header = () => {
 
   // Add scroll detection for changing header style
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        setIsScrolled(window.scrollY > 10);
+      }, 50); // 50ms debounce
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
