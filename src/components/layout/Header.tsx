@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -25,6 +25,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
+  const categoryMenuTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // Close mobile menu when navigating
   useEffect(() => {
@@ -58,6 +59,29 @@ const Header = () => {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
+
+  const handleCategoryMenuOpen = () => {
+    if (categoryMenuTimeout.current) {
+      clearTimeout(categoryMenuTimeout.current);
+      categoryMenuTimeout.current = null;
+    }
+    setIsCategoryMenuOpen(true);
+  };
+
+  const handleCategoryMenuClose = () => {
+    categoryMenuTimeout.current = setTimeout(() => {
+      setIsCategoryMenuOpen(false);
+    }, 300); // Add a 300ms delay before closing the menu
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (categoryMenuTimeout.current) {
+        clearTimeout(categoryMenuTimeout.current);
+      }
+    };
+  }, []);
 
   const categories = [
     {
@@ -128,8 +152,8 @@ const Header = () => {
 
             <div
               className='relative group'
-              onMouseEnter={() => setIsCategoryMenuOpen(true)}
-              onMouseLeave={() => setIsCategoryMenuOpen(false)}
+              onMouseEnter={handleCategoryMenuOpen}
+              onMouseLeave={handleCategoryMenuClose}
             >
               <button
                 className='flex items-center gap-1 py-2 text-gray-800 hover:text-primary transition-colors'
@@ -140,7 +164,11 @@ const Header = () => {
               </button>
 
               {isCategoryMenuOpen && (
-                <div className='absolute top-full left-0 w-[700px] bg-white shadow-lg rounded-lg py-4 px-6 grid grid-cols-3 gap-x-6 gap-y-2 z-50 mt-1'>
+                <div
+                  className='absolute top-full left-0 w-[700px] bg-white shadow-lg rounded-lg py-4 px-6 grid grid-cols-3 gap-x-6 gap-y-2 z-50 mt-1'
+                  onMouseEnter={handleCategoryMenuOpen}
+                  onMouseLeave={handleCategoryMenuClose}
+                >
                   {categories.map((category) => (
                     <div key={category.slug} className='py-2'>
                       <Link
