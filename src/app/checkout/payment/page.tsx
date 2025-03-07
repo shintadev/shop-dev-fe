@@ -155,7 +155,7 @@ export default function PaymentPage() {
                 <a href={`/profile/orders/${orderId}`}>View Order</a>
               </Button>
               <Button variant='outline' asChild>
-                <a href='/'>Return to Home</a>
+                <a href='/home'>Return to Home</a>
               </Button>
             </div>
           </div>

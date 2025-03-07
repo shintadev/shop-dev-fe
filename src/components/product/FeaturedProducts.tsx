@@ -38,15 +38,22 @@ const FeaturedProducts = () => {
       <Button
         variant='outline'
         size='icon'
-        className='absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full -ml-4 shadow-md hidden md:flex'
+        className='absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full -ml-5 shadow-md hidden md:flex h-10 w-10 hover:bg-primary hover:text-white transition-colors'
         onClick={() => scroll('left')}
       >
-        <ChevronLeft className='h-6 w-6' />
+        <ChevronLeft className='h-5 w-5' />
       </Button>
 
-      <div ref={scrollContainerRef} className='flex overflow-x-auto gap-4 pb-4 scrollbar-hide'>
-        {products.map((product) => (
-          <div key={product.id} className='min-w-[280px] max-w-[280px]'>
+      <div
+        ref={scrollContainerRef}
+        className='flex overflow-x-auto gap-6 pb-4 scrollbar-hide pl-1 pr-1 -mx-1 py-1'
+      >
+        {products.map((product, index) => (
+          <div
+            key={product.id}
+            className='min-w-[280px] max-w-[280px] animate-fadeIn'
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
             <ProductCard product={product} />
           </div>
         ))}
@@ -55,10 +62,10 @@ const FeaturedProducts = () => {
       <Button
         variant='outline'
         size='icon'
-        className='absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 rounded-full -mr-4 shadow-md hidden md:flex'
+        className='absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full -mr-5 shadow-md hidden md:flex h-10 w-10 hover:bg-primary hover:text-white transition-colors'
         onClick={() => scroll('right')}
       >
-        <ChevronRight className='h-6 w-6' />
+        <ChevronRight className='h-5 w-5' />
       </Button>
     </div>
   );
