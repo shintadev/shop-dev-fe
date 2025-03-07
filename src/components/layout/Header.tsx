@@ -100,11 +100,13 @@ const Header = () => {
           </Link>
 
           {/* Desktop Main Navigation */}
-          <nav className='hidden md:flex items-center space-x-6 ml-6'>
+          <nav className='hidden md:flex items-center space-x-6 ml-6 text-gray-800'>
             <Link
               href='/products'
               className={`py-2 transition-colors relative ${
-                pathname === '/products' ? 'text-primary font-medium' : 'hover:text-primary'
+                pathname === '/products'
+                  ? 'text-primary font-medium'
+                  : 'text-gray-800 hover:text-primary'
               }`}
             >
               All Products
@@ -119,7 +121,7 @@ const Header = () => {
               onMouseLeave={() => setIsCategoryMenuOpen(false)}
             >
               <button
-                className='flex items-center gap-1 py-2 hover:text-primary transition-colors'
+                className='flex items-center gap-1 py-2 text-gray-800 hover:text-primary transition-colors'
                 onClick={() => setIsCategoryMenuOpen(!isCategoryMenuOpen)}
               >
                 Categories{' '}
@@ -159,7 +161,9 @@ const Header = () => {
             <Link
               href='/new-arrivals'
               className={`py-2 transition-colors relative ${
-                pathname === '/new-arrivals' ? 'text-primary font-medium' : 'hover:text-primary'
+                pathname === '/new-arrivals'
+                  ? 'text-primary font-medium'
+                  : 'text-gray-800 hover:text-primary'
               }`}
             >
               New Arrivals
@@ -326,7 +330,7 @@ const Header = () => {
                 <Link href='/login'>
                   <Button
                     variant='ghost'
-                    className='rounded-full px-5 font-medium hover:bg-primary/10'
+                    className='rounded-full px-5 font-medium text-gray-800 hover:bg-primary/10 hover:text-primary'
                   >
                     Sign In
                   </Button>
@@ -583,50 +587,48 @@ const Header = () => {
               ) : (
                 <>
                   <li>
-                    <Link
-                      href='/login'
-                      className='flex items-center gap-2 px-2 py-3 rounded-lg hover:bg-gray-100'
-                    >
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      >
-                        <path d='M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4' />
-                        <polyline points='10 17 15 12 10 7' />
-                        <line x1='15' y1='12' x2='3' y2='12' />
-                      </svg>
-                      <span className='font-medium'>Sign In</span>
+                    <Link href='/login'>
+                      <div className='flex items-center gap-2 px-2 py-3 rounded-lg hover:bg-gray-100 cursor-pointer'>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='20'
+                          height='20'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                        >
+                          <path d='M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4' />
+                          <polyline points='10 17 15 12 10 7' />
+                          <line x1='15' y1='12' x2='3' y2='12' />
+                        </svg>
+                        <span className='font-medium'>Sign In</span>
+                      </div>
                     </Link>
                   </li>
                   <li>
-                    <Link
-                      href='/register'
-                      className='flex items-center gap-2 px-2 py-3 rounded-lg bg-primary/10 text-primary'
-                    >
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='20'
-                        height='20'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                      >
-                        <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-                        <circle cx='9' cy='7' r='4' />
-                        <line x1='19' y1='8' x2='19' y2='14' />
-                        <line x1='22' y1='11' x2='16' y2='11' />
-                      </svg>
-                      <span className='font-medium'>Sign Up</span>
+                    <Link href='/register'>
+                      <div className='flex items-center gap-2 px-2 py-3 rounded-lg bg-primary/10 text-primary cursor-pointer'>
+                        <svg
+                          xmlns='http://www.w3.org/2000/svg'
+                          width='20'
+                          height='20'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          stroke='currentColor'
+                          strokeWidth='2'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                        >
+                          <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
+                          <circle cx='9' cy='7' r='4' />
+                          <line x1='19' y1='8' x2='19' y2='14' />
+                          <line x1='22' y1='11' x2='16' y2='11' />
+                        </svg>
+                        <span className='font-medium'>Sign Up</span>
+                      </div>
                     </Link>
                   </li>
                 </>
