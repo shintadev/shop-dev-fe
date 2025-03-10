@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer className='bg-white py-10'>
-      <div className='container mx-auto px-40'>
+      <div className='container mx-auto px-30'>
         <div className='flex flex-wrap gap-8 justify-between'>
           {/* Quick Links section */}
           <div>
@@ -19,12 +19,12 @@ const Footer = () => {
               </li>
               <li>
                 <Link href='/products' className='text-blue-500 hover:underline'>
-                  Cửa hàng
+                  Mua sắm
                 </Link>
               </li>
               <li>
-                <Link href='/categories' className='text-blue-500 hover:underline'>
-                  Danh mục
+                <Link href='/sales' className='text-blue-500 hover:underline'>
+                  Deal giá tốt
                 </Link>
               </li>
               <li>

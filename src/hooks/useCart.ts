@@ -29,10 +29,10 @@ export const useCart = () => {
   } = useQuery({
     queryKey: ['cart'],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: { items: CartItem[]; totalPrice: number } }>(
-        '/cart'
-      );
-      return response.data.data;
+      const response = await apiClient.get<{
+        data: { data: { items: CartItem[]; totalPrice: number } };
+      }>('/carts');
+      return response.data.data.data;
     },
     enabled: isAuthenticated,
     staleTime: 1 * 60 * 1000, // 1 minute
@@ -42,11 +42,11 @@ export const useCart = () => {
   const addToCartMutation = useMutation({
     mutationFn: async (payload: AddToCartPayload) => {
       if (isAuthenticated) {
-        const response = await apiClient.post<{ data: { items: CartItem[] } }>(
-          '/cart/add',
+        const response = await apiClient.post<{ data: { data: { items: CartItem[] } } }>(
+          '/carts/add',
           payload
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle cart locally
         const existingItemIndex = localCart.findIndex(
@@ -62,7 +62,7 @@ export const useCart = () => {
         } else {
           // Fetch product details to add to cart
           const productResponse = await apiClient.get(`/products/${payload.productId}`);
-          const product = productResponse.data.data;
+          const product = productResponse.data.data.data;
 
           const newItem: CartItem = {
             id: Date.now().toString(), // Temporary ID
@@ -94,11 +94,11 @@ export const useCart = () => {
   const updateCartItemMutation = useMutation({
     mutationFn: async (payload: UpdateCartItemPayload) => {
       if (isAuthenticated) {
-        const response = await apiClient.put<{ data: { items: CartItem[] } }>(
-          '/cart/update',
+        const response = await apiClient.put<{ data: { data: { items: CartItem[] } } }>(
+          '/carts/update',
           payload
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle cart locally
         const updatedCart = localCart.map((item) => {
@@ -128,10 +128,10 @@ export const useCart = () => {
   const removeFromCartMutation = useMutation({
     mutationFn: async (productId: string) => {
       if (isAuthenticated) {
-        const response = await apiClient.delete<{ data: { items: CartItem[] } }>(
-          `/cart/remove?productId=${productId}`
+        const response = await apiClient.delete<{ data: { data: { items: CartItem[] } } }>(
+          `/carts/remove?productId=${productId}`
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle cart locally
         const updatedCart = localCart.filter((item) => item.productId !== productId);
@@ -148,8 +148,10 @@ export const useCart = () => {
   const clearCartMutation = useMutation({
     mutationFn: async () => {
       if (isAuthenticated) {
-        const response = await apiClient.delete<{ data: { items: CartItem[] } }>('/cart/clear');
-        return response.data.data;
+        const response = await apiClient.delete<{ data: { data: { items: CartItem[] } } }>(
+          '/carts/clear'
+        );
+        return response.data.data.data;
       } else {
         // For guest users, handle cart locally
         setLocalCart([]);

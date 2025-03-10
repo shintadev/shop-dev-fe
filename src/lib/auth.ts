@@ -3,13 +3,41 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { apiClient } from '@/lib/api/client';
 
+// Extend NextAuth types
+declare module 'next-auth' {
+  interface User {
+    accessToken?: string;
+    id?: string;
+    roles?: string[];
+  }
+  
+  interface Session {
+    accessToken?: string;
+    user: {
+      id?: string;
+      roles?: string[];
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    }
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    accessToken?: string;
+    id?: string;
+    roles?: string[];
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        password: { label: 'Mật khẩu', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -22,21 +50,36 @@ export const authOptions: NextAuthOptions = {
             password: credentials.password,
           });
 
-          const data = response.data.data;
+          // Extract token data from headers
+          const token = response.headers.authorization?.replace('Bearer ', '');
 
-          if (data.token) {
+          // If no token, cancel authentication
+          if (!token) {
+            return null;
+          }
+
+          // Get user info from token
+          const userResponse = await apiClient.get('/app/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const userData = userResponse.data.data;
+
+          if (userData) {
             return {
-              id: data.id.toString(),
-              email: data.email,
-              name: `${data.firstName} ${data.lastName}`,
-              image: data.avatar,
-              accessToken: data.token,
-              roles: data.roles,
+              id: userData.id.toString(),
+              email: userData.email,
+              name: `${userData.firstName} ${userData.lastName}`,
+              image: userData.avatarUrl,
+              accessToken: token,
+              roles: userData.roles,
             };
           }
           return null;
         } catch (error) {
-          console.error('Authentication error:', error);
+          console.error('Lỗi xác thực:', error);
           return null;
         }
       },
@@ -48,7 +91,7 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
-      // Initial sign in
+      // First login
       if (account && user) {
         if (account.provider === 'google') {
           try {
@@ -65,7 +108,7 @@ export const authOptions: NextAuthOptions = {
               roles: data.roles,
             };
           } catch (error) {
-            console.error('Google auth error:', error);
+            console.error('Lỗi xác thực Google:', error);
             return token;
           }
         }
@@ -78,7 +121,7 @@ export const authOptions: NextAuthOptions = {
         };
       }
 
-      // Return previous token if the access token has not expired yet
+      // Return old token if not expired
       return token;
     },
     async session({ session, token }) {

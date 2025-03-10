@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Product } from '@/models/product';
 import { apiClient } from '@/lib/api/client';
@@ -8,10 +7,10 @@ export const useFeaturedProducts = (limit: number = 6) => {
   return useQuery({
     queryKey: ['products', 'featured', limit],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product[] }>('/products', {
+      const response = await apiClient.get<{ data: { data: Product[] } }>('/products', {
         params: { featured: true, limit },
       });
-      return response.data.data;
+      return response.data.data.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
@@ -22,10 +21,10 @@ export const useNewestProducts = (limit: number = 8) => {
   return useQuery({
     queryKey: ['products', 'newest', limit],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product[] }>('/products', {
-        params: { sort: 'newest', limit },
+      const response = await apiClient.get<{ data: { data: Product[] } }>('/products', {
+        params: { sort: 'createdAt', direction: 'desc', limit },
       });
-      return response.data.data;
+      return response.data.data.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
@@ -36,16 +35,15 @@ export const useProductsByCategory = (categoryId: string, page: number = 1, limi
   return useQuery({
     queryKey: ['products', 'category', categoryId, page, limit],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product[]; total: number; pages: number }>(
-        '/products',
-        {
-          params: { categoryId, page, limit },
-        }
-      );
+      const response = await apiClient.get<{
+        data: { data: Product[]; totalElements: number; totalPages: number };
+      }>('/products/categories/' + categoryId, {
+        params: { page, size: limit },
+      });
       return {
-        products: response.data.data,
-        totalItems: response.data.total,
-        totalPages: response.data.pages,
+        products: response.data.data.data,
+        totalItems: response.data.data.totalElements,
+        totalPages: response.data.data.totalPages,
       };
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
@@ -58,8 +56,8 @@ export const useProductDetails = (slug: string) => {
   return useQuery({
     queryKey: ['product', slug],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product }>(`/products/${slug}`);
-      return response.data.data;
+      const response = await apiClient.get<{ data: { data: Product } }>(`/products/${slug}`);
+      return response.data.data.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     enabled: !!slug,
@@ -71,10 +69,13 @@ export const useRelatedProducts = (productId: string, limit: number = 4) => {
   return useQuery({
     queryKey: ['products', 'related', productId, limit],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product[] }>(`/products/${productId}/related`, {
-        params: { limit },
-      });
-      return response.data.data;
+      const response = await apiClient.get<{ data: { data: Product[] } }>(
+        `/products/${productId}/related`,
+        {
+          params: { limit },
+        }
+      );
+      return response.data.data.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
     enabled: !!productId,
@@ -86,16 +87,15 @@ export const useSearchProducts = (query: string, page: number = 1, limit: number
   return useQuery({
     queryKey: ['products', 'search', query, page, limit],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: Product[]; total: number; pages: number }>(
-        '/products/search',
-        {
-          params: { q: query, page, limit },
-        }
-      );
+      const response = await apiClient.get<{
+        data: { data: Product[]; totalElements: number; totalPages: number };
+      }>('/products/search', {
+        params: { keyword: query, page, size: limit },
+      });
       return {
-        products: response.data.data,
-        totalItems: response.data.total,
-        totalPages: response.data.pages,
+        products: response.data.data.data,
+        totalItems: response.data.data.totalElements,
+        totalPages: response.data.data.totalPages,
       };
     },
     staleTime: 5 * 60 * 1000, // 5 minutes

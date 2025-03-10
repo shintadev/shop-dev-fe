@@ -25,7 +25,7 @@ export default function Home() {
                   Những sản phẩm chất lượng được chúng tôi lựa chọn kỹ lưỡng
                 </p>
               </div>
-              <a href='/products?featured=true' className='link-arrow text-primary'>
+              <a href='/product?featured=true' className='link-arrow text-primary'>
                 Xem tất cả
                 <ArrowRight className='h-4 w-4' />
               </a>
@@ -61,11 +61,9 @@ export default function Home() {
                   <span className='relative z-10'>Hàng mới về</span>
                   <span className='absolute bottom-1 left-0 w-full h-3 bg-accent/10 -z-10'></span>
                 </h2>
-                <p className='text-gray-500 mt-2'>
-                  Những sản phẩm mới nhất trong bộ sưu tập của chúng tôi
-                </p>
+                <p className='text-gray-500 mt-2'>Những sản phẩm mới nhất của chúng tôi</p>
               </div>
-              <a href='/products?sort=newest' className='link-arrow text-primary'>
+              <a href='/product?sort=newest' className='link-arrow text-primary'>
                 Xem tất cả
                 <ArrowRight className='h-4 w-4' />
               </a>

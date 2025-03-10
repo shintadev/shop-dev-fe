@@ -217,7 +217,7 @@ const Header = () => {
                 pathname === '/sale' ? 'text-primary font-medium' : 'hover:text-primary'
               }`}
             >
-              <span className='text-red-500'>Khuyến mãi</span>
+              <span className='text-red-500'>Sales</span>
               {pathname === '/sale' && (
                 <span className='absolute bottom-0 left-0 w-full h-0.5 bg-red-500'></span>
               )}
@@ -452,7 +452,7 @@ const Header = () => {
                     <path d='m20.2 7.8-7.7 7.7-4-4-5.7 5.7' />
                     <path d='M15 7h6v6' />
                   </svg>
-                  <span className='font-medium'>Tất cả sản phẩm</span>
+                  <span className='font-medium'>Sản phẩm</span>
                 </Link>
               </li>
               <li>
@@ -550,7 +550,7 @@ const Header = () => {
                     <path d='m16.5 14.5 2.5 2.5' />
                     <path d='m19 14.5-2.5 2.5' />
                   </svg>
-                  <span className='font-medium text-red-500'>Khuyến mãi</span>
+                  <span className='font-medium text-red-500'>Sales</span>
                 </Link>
               </li>
 

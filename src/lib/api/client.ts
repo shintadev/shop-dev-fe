@@ -1,9 +1,23 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { getSession, signOut } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
 // Create axios instance
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+const baseURL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080/api';
+
+// Extend Session type to include accessToken
+declare module 'next-auth' {
+  interface Session {
+    accessToken?: string;
+    error?: string;
+  }
+}
+
+// Extend AxiosError response data type
+interface ApiErrorData {
+  message?: string;
+  errors?: Record<string, string[]>;
+}
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL,
@@ -25,7 +39,8 @@ apiClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) =>
+    Promise.reject(error instanceof Error ? error : new Error(error?.message || 'Request Error'))
 );
 
 // Response interceptor to handle errors
@@ -33,7 +48,7 @@ apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  async (error: AxiosError) => {
+  async (error: AxiosError<ApiErrorData>) => {
     const originalRequest = error.config as AxiosRequestConfig & { _retry?: boolean };
 
     // Handle unauthorized errors (401)
@@ -51,16 +66,15 @@ apiClient.interceptors.response.use(
             return apiClient(originalRequest);
           }
         } catch (refreshError) {
-          // If refresh fails, sign out the user
-          if (typeof window !== 'undefined') {
-            signOut({ callbackUrl: '/login' });
-          }
+          // Handle refresh token failure
+          return Promise.reject(
+            refreshError instanceof Error ? refreshError : new Error(String(refreshError))
+          );
         }
-      } else {
-        // If we've already tried to refresh, sign out
-        if (typeof window !== 'undefined') {
-          signOut({ callbackUrl: '/login' });
-        }
+      }
+      // We already tried to refresh the token, redirect to login page
+      else if (typeof window !== 'undefined') {
+        window.location.href = '/login?session=expired';
       }
     }
 
@@ -82,12 +96,18 @@ apiClient.interceptors.response.use(
           if (typeof message === 'string') {
             toast.error(message);
           } else if (Array.isArray(message)) {
-            message.forEach((msg) => toast.error(msg));
+            message.forEach((msg: string) => toast.error(msg));
           }
         });
       } else {
         toast.error('Validation failed');
       }
+    }
+
+    // Handle bad request errors (400)
+    if (error.response?.status === 400) {
+      const message = error.response?.data?.message || 'Invalid request';
+      toast.error(message);
     }
 
     // Handle server errors (500)
@@ -105,7 +125,8 @@ apiClient.interceptors.response.use(
       toast.error('The request timed out. Please try again.');
     }
 
-    return Promise.reject(error);
+    // Ensure we always reject with an Error object
+    return Promise.reject(error instanceof Error ? error : new Error('Server Connection Error'));
   }
 );
 

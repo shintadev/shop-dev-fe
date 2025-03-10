@@ -19,24 +19,40 @@ export const useWishlist = () => {
   } = useQuery({
     queryKey: ['wishlist'],
     queryFn: async () => {
-      const response = await apiClient.get<{ data: { items: WishlistItem[]; itemCount: number } }>(
-        '/wishlist'
-      );
-      return response.data.data;
+      const response = await apiClient.get<{
+        data: { data: { items: WishlistItem[]; itemCount: number } };
+      }>('/wishlists');
+      return response.data.data.data;
     },
     enabled: isAuthenticated,
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 
+  // Check if product is in wishlist
+  const isProductInWishlistQuery = (productId: string) => {
+    return useQuery({
+      queryKey: ['wishlist', 'check', productId],
+      queryFn: async () => {
+        const response = await apiClient.get<{ data: { data: boolean } }>(
+          `/wishlists/check?productId=${productId}`
+        );
+        return response.data.data.data;
+      },
+      enabled: isAuthenticated && !!productId,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    });
+  };
+
   // Add to wishlist
   const addToWishlistMutation = useMutation({
     mutationFn: async (productId: string) => {
       if (isAuthenticated) {
-        const response = await apiClient.post<{ data: { items: WishlistItem[] } }>(
-          '/wishlist/add',
-          { productId }
+        const response = await apiClient.post<{ data: { data: { items: WishlistItem[] } } }>(
+          '/wishlists/add',
+          null,
+          { params: { productId } }
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle wishlist locally
         if (!localWishlist.includes(productId)) {
@@ -55,10 +71,10 @@ export const useWishlist = () => {
   const removeFromWishlistMutation = useMutation({
     mutationFn: async (productId: string) => {
       if (isAuthenticated) {
-        const response = await apiClient.delete<{ data: { items: WishlistItem[] } }>(
-          `/wishlist/remove?productId=${productId}`
+        const response = await apiClient.delete<{ data: { data: { items: WishlistItem[] } } }>(
+          `/wishlists/remove?productId=${productId}`
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle wishlist locally
         const updatedWishlist = localWishlist.filter((id) => id !== productId);
@@ -75,10 +91,10 @@ export const useWishlist = () => {
   const clearWishlistMutation = useMutation({
     mutationFn: async () => {
       if (isAuthenticated) {
-        const response = await apiClient.delete<{ data: { items: WishlistItem[] } }>(
-          '/wishlist/clear'
+        const response = await apiClient.delete<{ data: { data: { items: WishlistItem[] } } }>(
+          '/wishlists/clear'
         );
-        return response.data.data;
+        return response.data.data.data;
       } else {
         // For guest users, handle wishlist locally
         setLocalWishlist([]);
@@ -109,6 +125,7 @@ export const useWishlist = () => {
     isLoading,
     error,
     isInWishlist,
+    isProductInWishlistQuery,
     addToWishlist: (productId: string) => addToWishlistMutation.mutateAsync(productId),
     removeFromWishlist: (productId: string) => removeFromWishlistMutation.mutateAsync(productId),
     clearWishlist: () => clearWishlistMutation.mutateAsync(),

@@ -9,9 +9,9 @@ import '@/styles/globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ShopDev - Điểm đến Thương mại điện tử Tuyệt vời của Bạn',
+  title: 'ShopDev - Điểm đến mua sắm tuyệt vời của bạn',
   description:
-    'ShopDev cung cấp nhiều loại sản phẩm với giao hàng nhanh và dịch vụ khách hàng tuyệt vời',
+    'ShopDev cung cấp nhiều loại sản phẩm với giao hàng n anh và dịch vụ khách hàng tuyệt vời',
 };
 
 export default function RootLayout({
