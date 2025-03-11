@@ -2,9 +2,6 @@ import CategoriesList from '@/components/category/CategoriesList';
 import HeroBanner from '@/components/home/HeroBanner';
 import FeaturedProducts from '@/components/product/FeaturedProducts';
 import NewestProducts from '@/components/product/NewestProducts';
-import CategorySkeleton from '@/components/ui/skeletons/CategorySkeleton';
-import ProductSkeleton from '@/components/ui/skeletons/ProductSkeleton';
-import { Suspense } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
@@ -47,9 +44,7 @@ export default function Home() {
                 <ArrowRight className='h-4 w-4' />
               </a>
             </div>
-            <Suspense fallback={<CategorySkeleton count={6} />}>
-              <CategoriesList />
-            </Suspense>
+            <CategoriesList />
           </div>
 
           <div className='mb-16'>
@@ -66,9 +61,7 @@ export default function Home() {
                 <ArrowRight className='h-4 w-4' />
               </a>
             </div>
-            <Suspense fallback={<ProductSkeleton count={8} />}>
-              <NewestProducts />
-            </Suspense>
+            <NewestProducts />
           </div>
         </section>
       </div>

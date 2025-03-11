@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 import ErrorDisplay from '@/components/ui/ErrorDisplay';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
+import ProductSkeleton from '@/components/ui/skeletons/ProductSkeleton';
 
 const NewestProducts = () => {
   const { data: products, isLoading, error } = useNewestProducts();
@@ -15,9 +16,12 @@ const NewestProducts = () => {
     return <ErrorDisplay message='Failed to load newest products' />;
   }
 
-  if (isLoading || !products) {
-    // Skeleton is handled by Suspense in the parent component
-    return null;
+  if (isLoading) {
+    return <ProductSkeleton count={8} />;
+  }
+
+  if (!products || products.length === 0) {
+    return <div className='text-center py-8'>No new products available</div>;
   }
 
   const showMoreProducts = () => {

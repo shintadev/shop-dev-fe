@@ -11,6 +11,8 @@ export const useCategories = () => {
       return response.data.data.data;
     },
     staleTime: 10 * 60 * 1000, // 10 minutes
+    // Disable this query during SSR to prevent server errors
+    enabled: typeof window !== 'undefined',
   });
 };
 
@@ -36,6 +38,8 @@ export const useRootCategories = () => {
       return response.data.data.data;
     },
     staleTime: 10 * 60 * 1000, // 10 minutes
+    // Disable this query during SSR to prevent server errors
+    enabled: typeof window !== 'undefined',
   });
 };
 

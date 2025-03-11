@@ -30,7 +30,7 @@ const FeaturedProducts = () => {
   }
 
   if (isLoading) {
-    return <ProductSkeleton count={6} />;
+    return <ProductSkeleton count={8} />;
   }
 
   if (!products || products.length === 0) {
@@ -76,5 +76,6 @@ const FeaturedProducts = () => {
 };
 
 export default FeaturedProducts;
+
 
 

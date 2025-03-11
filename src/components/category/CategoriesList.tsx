@@ -7,6 +7,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCategories } from '@/hooks/useCategories';
 import ErrorDisplay from '@/components/ui/ErrorDisplay';
+import CategorySkeleton from '@/components/ui/skeletons/CategorySkeleton';
 
 const CategoriesList = () => {
   const { data: categories, isLoading, error } = useCategories();
@@ -29,9 +30,12 @@ const CategoriesList = () => {
     return <ErrorDisplay message='Failed to load categories' />;
   }
 
-  if (isLoading || !categories) {
-    // Skeleton is handled by Suspense in the parent component
-    return null;
+  if (isLoading) {
+    return <CategorySkeleton count={8} />;
+  }
+
+  if (!categories || categories.length === 0) {
+    return <div className='text-center py-8'>No categories available</div>;
   }
 
   return (
