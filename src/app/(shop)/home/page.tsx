@@ -30,9 +30,7 @@ export default function Home() {
                 <ArrowRight className='h-4 w-4' />
               </a>
             </div>
-            <Suspense fallback={<ProductSkeleton count={6} />}>
-              <FeaturedProducts />
-            </Suspense>
+            <FeaturedProducts />
           </div>
 
           <div className='mb-16'>

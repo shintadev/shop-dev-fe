@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import ProductDetail from '@/components/product/ProductDetail';
+import ProductDetail from '@/components/product/ProductDetails';
 import RelatedProducts from '@/components/product/RelatedProducts';
 import { apiClient } from '@/lib/api/client';
 import { Product } from '@/models/product';

@@ -13,6 +13,8 @@ export const useFeaturedProducts = (limit: number = 6) => {
       return response.data.data.data;
     },
     staleTime: 5 * 60 * 1000, // 5 minutes
+    // Disable this query during SSR to prevent server errors
+    enabled: typeof window !== 'undefined',
   });
 };
 
@@ -102,3 +104,5 @@ export const useSearchProducts = (query: string, page: number = 1, limit: number
     enabled: !!query,
   });
 };
+
+

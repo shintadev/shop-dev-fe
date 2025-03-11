@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 import { Button } from '@/components/ui/button';
 import { useFeaturedProducts } from '@/hooks/useProducts';
 import ErrorDisplay from '@/components/ui/ErrorDisplay';
+import ProductSkeleton from '@/components/ui/skeletons/ProductSkeleton';
 
 const FeaturedProducts = () => {
   const { data: products, isLoading, error } = useFeaturedProducts();
@@ -28,9 +29,12 @@ const FeaturedProducts = () => {
     return <ErrorDisplay message='Failed to load featured products' />;
   }
 
-  if (isLoading || !products) {
-    // Skeleton is handled by Suspense in the parent component
-    return null;
+  if (isLoading) {
+    return <ProductSkeleton count={6} />;
+  }
+
+  if (!products || products.length === 0) {
+    return <div className='text-center py-8'>No featured products available</div>;
   }
 
   return (
@@ -72,3 +76,5 @@ const FeaturedProducts = () => {
 };
 
 export default FeaturedProducts;
+
+
